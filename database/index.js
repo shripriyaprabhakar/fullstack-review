@@ -6,10 +6,8 @@ let repoSchema = mongoose.Schema({ //new?
     id : Number,
     name: String,
     full_name: String,
-    owner: String,
-    login: String,
     html_url: String,
-    repos_url: String
+    
 
   // TODO: your schema here!
 });
@@ -23,16 +21,19 @@ db.once('open', function() {
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repo, cb) => {
-   repo = new Repo ({
-    id: repo.id,
-    name: repo.name,
-    full_name: repo.full_name,
-    owner: repo.owner,
-    login: repo.login, 
-    html_url: repo.html_url,
-    repos_url: repo.repos_url
-  });
-  repo.save(cb);
+    //console.log('reponame', repo.name);
+  for (let i = 0; i < repo.length; i++) {
+    newRepo = new Repo ({
+    id: repo[i].id,
+    name: repo[i].name,
+    full_name: repo[i].full_name,
+    html_url: repo[i].html_url,
+    });
+      newRepo.save(cb);
+     console.log('reponame', repo[i].name);
+  }
+  
+  
 
 }
 
@@ -41,7 +42,7 @@ let save = (repo, cb) => {
   // the MongoDB
   
 let find  = (callback) => {
-  Repo.find().sort({forks:-1}).limit(25).exec(callback);
+  Repo.find({}).sort('-size').limit(25).exec(callback);
 // Repo.find().sort({forks:-1}.limit(25).exec(callback));
 }
 
