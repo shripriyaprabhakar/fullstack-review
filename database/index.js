@@ -24,13 +24,13 @@ let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repo, cb) => {
    repo = new Repo ({
-    id: repoData.id,
-    name: repoData.name,
-    full_name: repoData.full_name,
-    owner: repoData.owner,
-    login: repoData.login, 
-    html_url: repoData.html_url,
-    repos_url: repoData.repos_url
+    id: repo.id,
+    name: repo.name,
+    full_name: repo.full_name,
+    owner: repo.owner,
+    login: repo.login, 
+    html_url: repo.html_url,
+    repos_url: repo.repos_url
   });
   repo.save(cb);
 
@@ -41,8 +41,8 @@ let save = (repo, cb) => {
   // the MongoDB
   
 let find  = (callback) => {
-  Repo.find().sort({forks:-1}.limit(25).exec(callback));
-
+  Repo.find().sort({forks:-1}).limit(25).exec(callback);
+// Repo.find().sort({forks:-1}.limit(25).exec(callback));
 }
 
 // Repo.find(function (err, repos) {

@@ -16,16 +16,21 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    this.handleClick();
+    this.refresh();
   }
 
-  handleClick () {
+  refresh() {
+    var self = this;
      $.ajax({
      type : 'GET',
      url: '/repos',
      dataType: 'json',//req.body
-     success: function () {
-       console.log(success);
+     success: function (result) {
+       var newArr = self.state.repos;
+        console.log(result);
+       newArr = newArr.concat(result);
+console.log(newArr);
+       self.setState({repos : newArr})
      },
      error: function () {
         console.log ('error');
@@ -37,17 +42,18 @@ class App extends React.Component {
   search (term) {
     console.log(`${term} was searched`);
     // TODO
-
+     var self = this;
     $.ajax({
     type : 'POST',
     url: '/repos',
     data: {username:term},
     contenType: 'application/json',
     success : function () {
-      console.log('success')
+      console.log('success');
+       self.refresh();
     },
     error : function () {
-      console.log('error')
+      //console.log('error')
     }
     });
   }
@@ -57,7 +63,7 @@ class App extends React.Component {
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
-      <button onClick={this.handleClick.bind(this)}> Refresh </button>
+      <button onClick={this.refresh.bind(this)}> Refresh </button>
     </div>)
   }
 }

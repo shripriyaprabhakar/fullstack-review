@@ -1,8 +1,8 @@
 
 const express = require('express');
 let app = express();
-const db = require('../database/index.js');
-const Repos = require('../helpers/github.js');
+const DB = require('../database/index.js');
+ const Repos = require('../helpers/github.js');
 var bodyParser = require('body-parser')
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -41,7 +41,7 @@ app.post('/repos', function (req, res) {
  console.log(body.username);
 
      Repos.getReposByUsername(body.username, (results) => {
-        Repos.save(results, (req,res) => {
+        DB.save(results, (err, result) => {
                 res.send();
         }); 
       });
@@ -55,10 +55,12 @@ app.post('/repos', function (req, res) {
 
 app.get('/repos', function (req, res) {
   // TODO - your code here!
-  if (err) { return console.log('err');
-  } else {
-  res.send('/repos')
-  }
+    DB.find( (err,result) => {
+          res.send(result);
+    });
+  
+  
+
 });
  
  
