@@ -29,8 +29,7 @@ let save = (repoData, cb) => {
     full_name: repoData.full_name,
     owner: repoData.owner,
     login: repoData.login, 
-    html_url: repoDa
-ta.html_url,
+    html_url: repoData.html_url,
     repos_url: repoData.repos_url
   });
   repo.save(cb);

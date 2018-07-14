@@ -15,6 +15,26 @@ class App extends React.Component {
   
   }
 
+  componentDidMount () {
+    this.handleClick();
+  }
+
+  handleClick () {
+     $.ajax({
+     type : 'GET',
+     url: '/repos',
+     data: JSON.parse(repos),//req.body
+     contenType: 'application/json',
+     success: function () {
+       console.log(success);
+     },
+     error: function () {
+        console.log (error);
+     }
+    });
+  }
+
+
   search (term) {
     console.log(`${term} was searched`);
     // TODO
@@ -22,10 +42,10 @@ class App extends React.Component {
     $.ajax({
     type : 'POST',
     url: '/repos',
-    
+    data: JSON.stringify(term),
     contenType: 'application/json',
     success : function (term) {
-      term : term;
+      console.log('success')
     },
     error : function () {
       console.log('error')
@@ -38,6 +58,7 @@ class App extends React.Component {
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
+      <button onClick={this.handleClick.bind(this)}> Refresh </button>
     </div>)
   }
 }
