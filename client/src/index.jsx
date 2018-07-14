@@ -10,12 +10,27 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
-
+ 
+  this.search = this.search.bind(this);  
+  
   }
 
   search (term) {
     console.log(`${term} was searched`);
     // TODO
+
+    $.ajax({
+    type : 'POST',
+    url: '/repos',
+    
+    contenType: 'application/json',
+    success : function (term) {
+      term : term;
+    },
+    error : function () {
+      console.log('error')
+    }
+    });
   }
 
   render () {
@@ -27,4 +42,5 @@ class App extends React.Component {
   }
 }
 
+export default App;
 ReactDOM.render(<App />, document.getElementById('app'));
