@@ -22,8 +22,8 @@ db.once('open', function() {
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (repoData, cb) => {
-  let repo = new Repo ({
+let save = (repo, cb) => {
+   repo = new Repo ({
     id: repoData.id,
     name: repoData.name,
     full_name: repoData.full_name,
@@ -40,7 +40,10 @@ let save = (repoData, cb) => {
   // This function should save a repo or repos to
   // the MongoDB
   
+let find  = (callback) => {
+  Repo.find().sort({forks:-1}.limit(25).exec(callback));
 
+}
 
 // Repo.find(function (err, repos) {
 //   if (err) return console.error(err);
@@ -48,3 +51,4 @@ let save = (repoData, cb) => {
 // })
 
 module.exports.save = save;
+module.exports.find = find;

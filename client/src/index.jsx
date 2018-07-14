@@ -23,13 +23,12 @@ class App extends React.Component {
      $.ajax({
      type : 'GET',
      url: '/repos',
-     data: JSON.parse(repos),//req.body
-     contenType: 'application/json',
+     dataType: 'json',//req.body
      success: function () {
        console.log(success);
      },
      error: function () {
-        console.log (error);
+        console.log ('error');
      }
     });
   }
@@ -42,9 +41,9 @@ class App extends React.Component {
     $.ajax({
     type : 'POST',
     url: '/repos',
-    data: JSON.stringify(term),
+    data: {username:term},
     contenType: 'application/json',
-    success : function (term) {
+    success : function () {
       console.log('success')
     },
     error : function () {
